@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Predict Employee Performance</title>
+    <script>
+        function fetchEmployees() {
+            let selectedDate = document.getElementById("date").value;
+            if (!selectedDate) return;
+
+            fetch(`/get_employees_by_date?date=${selectedDate}`)
+                .then(response => response.json())
+                .then(data => {
+                    let employeeDropdown = document.getElementById("employee_name");
+                    employeeDropdown.innerHTML = "";
+                    
+                    if (data.length === 0) {
+                        employeeDropdown.innerHTML = "<option>No employees found</option>";
+                        return;
+                    }
+
+                    data.forEach(employee => {
+                        let option = document.createElement("option");
+                        option.value = employee;
+                        option.textContent = employee;
+                        employeeDropdown.appendChild(option);
+                    });
+                });
+        }
+    </script>
+</head>
+<body style="font-family: Arial, sans-serif; text-align: center; margin: 50px; background-color: #f4f4f4;">
+    <h2 style="color: #333;">Select Date & Employee to Predict Performance</h2>
+    <form action="/predict" method="post" style="background: white; padding: 20px; width: 300px; margin: auto; box-shadow: 0px 0px 10px gray; border-radius: 8px;">
+        <label>Select Date:</label>
+        <input type="date" id="date" name="date" required style="width: 90%; padding: 8px; margin: 5px;" onchange="fetchEmployees()"><br>
+
+        <label>Select Employee:</label>
+        <select id="employee_name" name="name" required style="width: 90%; padding: 8px; margin: 5px;">
+            <option value="">Select a Date First</option>
+        </select><br>
+
+        <input type="submit" value="Predict" style="background: #FFBA00; color: rgb(0, 0, 0); border: none; padding: 10px; width: 100%; cursor: pointer;">
+    </form>
+</body>
+</html>

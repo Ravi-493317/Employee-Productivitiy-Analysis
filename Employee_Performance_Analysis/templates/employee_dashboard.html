@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        h2 {
+            color: #000000;
+            margin-bottom: 20px;
+        }
+        form {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        input[type="submit"], input[type="number"] {
+            width: 200px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #fbb115;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            background-color: #fbb115;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+        input[type="submit"]:hover {
+            background-color: #e09c10;
+        }
+        p {
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+            background: #ffffff;
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #333;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        a:hover {
+            background-color: #222;
+        }
+    </style>
+</head>
+<body>
+    <h2>Welcome, {{ name }}</h2>
+    <form method="post">
+        <input type="submit" value="{{ punch_status }}">
+    </form>
+    {% if record %}
+        <p>Punch In: {{ record[0] }}</p>
+        <p>Punch Out: {{ record[1] }}</p>
+        <p>Total Hours: {{ record[2] }}</p>
+        <form action="/store_task_completion" method="post">
+            <input type="number" name="task_completion" placeholder="Task Completion (%)" required>
+            <input type="submit" value="Submit">
+        </form>
+    {% endif %}
+    <br>
+    <a href="/logout">Logout</a>
+</body>
+</html>
